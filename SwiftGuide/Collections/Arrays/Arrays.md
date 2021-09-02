@@ -131,3 +131,47 @@ for (index, value) in shoppingList.enumerated() {
 // Item 5: Bananas
 ```
 
+# functional programming
+
+1. map() function applies a function to every item in a collection. Think of “mapping” or transforming one set of values into another set of values.
+2. reduce() function turns a collection into one value. Think of it as combining many values into one, like averaging a set of numbers.
+3. filter() function simply returns values that passed an if-statement, and only if that condition resulted in true.
+
+#### map()
+
+```swift
+var names = [Person(firstName: "Josh"),
+             Person(firstName: "Kyle"),
+             Person(firstName: "Nate")]
+             
+let allUpperCaseFirstNames = names.map { person in
+    Person(firstName: person.firstName.uppercased())
+}
+// Item1: JOSH
+// Item2: KYLE
+// Item3: NATE
+```
+
+#### reduce()
+``` swift
+let allNamesString = names.reduce("") { result, person in
+    if (result.isEmpty) {
+        return result + person.firstName
+    } else {
+        return result + ", \(person.firstName)"
+    }
+}
+print(allNamesString)
+// Josh, Kyle, Nate
+```
+
+#### filter()
+
+```swift
+let filteredShoppingList = shoppingList.filter { item in
+    person.firstName.hasPrefix("Ban") || person.firstName.hasPrefix("Fl")
+}
+
+// Item1: Flour
+// Item2: Bananas
+```
