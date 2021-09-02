@@ -37,6 +37,10 @@ for name in names {
     print(name.firstName)
 }
 
+for (index, name) in names.enumerated() {
+    print("\(name.firstName) is at index \(index + 1)")
+}
+
 names.forEach{name in
     print(name.firstName)
 }
@@ -67,6 +71,27 @@ let allNamesString = names.reduce("") { result, person in
 }
 
 print(allNamesString)
+//"Josh, Sarah, Connor, Alexis"
+
+//compactMap
+let listOfNames = names.compactMap({$0.firstName})
+print(listOfNames)
+//["Josh", "Sarah", "Connor", "Alexis"]
+
+// compactMap to remove nils
+
+let numbers = ["3", "65", "0", "error", "11", "error"]
+
+let results = numbers.map { Int($0) }
+print(results)
+//results contains nil values
+
+let compactMapResults = numbers.compactMap{Int($0)}
+print(compactMapResults)
+// compactMapResults is of type [Int]
+
+
+
 
 
 
