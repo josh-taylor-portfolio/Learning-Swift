@@ -136,6 +136,7 @@ for (index, value) in shoppingList.enumerated() {
 1. map() function applies a function to every item in a collection. Think of “mapping” or transforming one set of values into another set of values.
 2. reduce() function turns a collection into one value. Think of it as combining many values into one, like averaging a set of numbers.
 3. filter() function simply returns values that passed an if-statement, and only if that condition resulted in true.
+4. compactMap() function removes nil values from the input array. It's super useful when working with optionals.
 
 #### map()
 
@@ -174,4 +175,21 @@ let filteredShoppingList = shoppingList.filter { item in
 
 // Item1: Flour
 // Item2: Bananas
+```
+
+#### compactMap()
+
+```swift
+// compactMap to remove nils
+
+let numbers = ["3", "65", "0", "error", "11", "error"]
+
+let results = numbers.map { Int($0) }
+print(results)
+//results contains nil and is type [Int?]
+
+let compactMapResults = numbers.compactMap{Int($0)}
+print(compactMapResults)
+// compactMapResults is of type [Int]
+
 ```
