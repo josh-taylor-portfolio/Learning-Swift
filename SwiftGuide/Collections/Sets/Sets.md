@@ -109,3 +109,52 @@ for genre in favoriteGenres.sorted() {
 ```
 
 # Performing Set Operations
+
+![SetOperations](https://user-images.githubusercontent.com/89819167/131910089-10a4495a-dfe7-4750-8c73-49d3c629a404.png)
+
+1. intersection(_:) method creates a new set with only the values common to both sets
+2. symmetricDifference(_:) method creates a new set with values in either set, but not both
+3. union(_:) method to creates a new set with all of the values in both sets
+4. subtracting(_:) method creates a new set with values not in the specified set
+
+```swift
+let oddDigits: Set = [1, 3, 5, 7, 9]
+let evenDigits: Set = [0, 2, 4, 6, 8]
+let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
+
+oddDigits.union(evenDigits).sorted()
+// [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+oddDigits.intersection(evenDigits).sorted()
+// []
+oddDigits.subtracting(singleDigitPrimeNumbers).sorted()
+// [1, 9]
+oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
+// [1, 2, 9]
+```
+
+# Set Membership and Equality
+
+![image](https://user-images.githubusercontent.com/89819167/131910993-92285c79-0166-4bcf-b1ca-15a98e2cbbd6.png)
+
+1. Set a is superset of set b, becuase a contains all of b
+2. Set b is a subset of set a, because all elements of b are contained by a
+3. Set b and set c are disjoint, because they share no elements in common
+
+(==) operator means "is equal" aka contain all the same values  
+isSubset(of:) checks if all elements are contained within a set  
+isSuperset(of:) checks if a set contains all the values in a specified set  
+isStrictSubset(of:) or isStrictSuperset(of:) determines whether a set is a subset or superset, but not equal to, a specified set  
+isDisjoint(with:) check if two sets have no values in commmon
+
+```swift
+let houseAnimals: Set = ["🐶", "🐱"]
+let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
+let cityAnimals: Set = ["🐦", "🐭"]
+
+houseAnimals.isSubset(of: farmAnimals)
+// true
+farmAnimals.isSuperset(of: houseAnimals)
+// true
+farmAnimals.isDisjoint(with: cityAnimals)
+// true
+```
