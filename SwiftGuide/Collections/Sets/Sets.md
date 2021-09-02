@@ -158,3 +158,39 @@ farmAnimals.isSuperset(of: houseAnimals)
 farmAnimals.isDisjoint(with: cityAnimals)
 // true
 ```
+
+# Sets with Custom Objects
+
+Custom Objects need to Hashable Protocol:  
+1. func hash(into hasher: inout Hasher)
+
+```swift 
+struct Movie: Hashable
+{
+    var name:String
+    var year:Int
+    var rating:Int
+    
+  init(name: String, year: Int, rating: Int) {
+    self.name = name
+    self.year = year
+    self.rating = rating
+  }
+
+  init(withName name: String) {
+      self.name = name
+      self.year = 0
+      self.rating = 0
+  }
+  
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(name)
+    hasher.combine(year)
+    hasher.combine(rating)
+  }
+  
+  static func == (lhs: Movie, rhs: Movie) -> Bool {
+    return lhs.name == rhs.name
+   }
+}
+```
