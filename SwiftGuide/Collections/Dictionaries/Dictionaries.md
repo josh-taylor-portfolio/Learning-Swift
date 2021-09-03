@@ -119,3 +119,26 @@ let airportNames = [String](airports.values)
 map()
 ```swift
 let bookPrice = ["Harry Potter": 40, "Jungle Book": 10]
+
+let bookDescriptions = bookPrice.map { (key: String, value: Int) in
+    "\(key) is $\(value)"
+}
+//["Jungle Book is $10", "Harry Potter is $40"]
+```
+
+filter()
+```swift
+let filteredBookPrices = bookPrices.filter{ (key, value) -> Bool in
+    key.hasPrefix("Harry") || value == 10
+}
+//["Harry Potter": 40, "Jungle Book": 10]
+```
+
+reduce()
+```swift
+let totalPriceOfAllBooks = bookPrices.reduce(0) { result, nextItem in
+    result + nextItem.value
+}
+
+print(totalPriceOfAllBooks)
+//50
