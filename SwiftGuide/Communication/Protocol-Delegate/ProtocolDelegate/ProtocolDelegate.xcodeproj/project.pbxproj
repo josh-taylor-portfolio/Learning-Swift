@@ -16,7 +16,6 @@
 		4F1070B626E830DF005847D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F1070B426E830DF005847D0 /* LaunchScreen.storyboard */; };
 		4F1070C126E830DF005847D0 /* ProtocolDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1070C026E830DF005847D0 /* ProtocolDelegateTests.swift */; };
 		4F1070CC26E830DF005847D0 /* ProtocolDelegateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1070CB26E830DF005847D0 /* ProtocolDelegateUITests.swift */; };
-		4F1070DA26E83980005847D0 /* CryptoRateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1070D926E83980005847D0 /* CryptoRateService.swift */; };
 		4F1070DC26E83C76005847D0 /* FetchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1070DB26E83C76005847D0 /* FetchViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,7 +52,6 @@
 		4F1070C726E830DF005847D0 /* ProtocolDelegateUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtocolDelegateUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F1070CB26E830DF005847D0 /* ProtocolDelegateUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolDelegateUITests.swift; sourceTree = "<group>"; };
 		4F1070CD26E830DF005847D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4F1070D926E83980005847D0 /* CryptoRateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoRateService.swift; sourceTree = "<group>"; };
 		4F1070DB26E83C76005847D0 /* FetchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,7 +111,6 @@
 				4F1070B426E830DF005847D0 /* LaunchScreen.storyboard */,
 				4F1070B726E830DF005847D0 /* Info.plist */,
 				4F1070AF26E830DC005847D0 /* ProtocolDelegate.xcdatamodeld */,
-				4F1070D926E83980005847D0 /* CryptoRateService.swift */,
 				4F1070DB26E83C76005847D0 /* FetchViewController.swift */,
 			);
 			path = ProtocolDelegate;
@@ -271,7 +268,6 @@
 				4F1070DC26E83C76005847D0 /* FetchViewController.swift in Sources */,
 				4F1070A726E830DC005847D0 /* AppDelegate.swift in Sources */,
 				4F1070B126E830DC005847D0 /* ProtocolDelegate.xcdatamodeld in Sources */,
-				4F1070DA26E83980005847D0 /* CryptoRateService.swift in Sources */,
 				4F1070A926E830DC005847D0 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

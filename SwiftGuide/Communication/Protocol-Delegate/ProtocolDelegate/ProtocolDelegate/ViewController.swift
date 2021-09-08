@@ -7,10 +7,11 @@
 
 import UIKit
 
-class ViewController: UIViewController, CryptoServiceDelegate  {
+class ViewController: UIViewController, FetchViewControllerDelegate  {
+
     
 
-    @IBOutlet weak var priceLable: UILabel!
+    @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var fetchButton: UIButton!
     
     override func viewDidLoad() {
@@ -21,14 +22,15 @@ class ViewController: UIViewController, CryptoServiceDelegate  {
     
     @IBAction func fetch(_ sender: Any) {
         let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Fetch") as? FetchViewController
-        vc?.cryptoRateService.delegate = self
+        vc?.fetchViewControllerDelegate = self
         self.navigationController?.pushViewController(vc!, animated: true)
         
     }
     
-    func didFetchCyrptoPrice(cryptoService: CryptoRateService, cyrptoRate: CryptoRate) {
-        priceLable.text = "Crypto Symbol: \(cyrptoRate.symbol) is $\(cyrptoRate.rate)"
+    func buttonPressed(fetchViewController: FetchViewController, value: String) {
+        self.infoLabel.text = "value from FetchViewController is \(value)"
     }
+    
     
 
 }

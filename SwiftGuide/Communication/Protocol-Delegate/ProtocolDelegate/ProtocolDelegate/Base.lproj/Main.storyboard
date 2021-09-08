@@ -17,17 +17,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="HOk-j1-guM">
-                                <rect key="frame" x="145" y="408" width="124" height="80"/>
+                                <rect key="frame" x="0.0" y="433" width="414" height="30"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nAm-M7-YaF">
-                                        <rect key="frame" x="0.0" y="0.0" width="124" height="50"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nAm-M7-YaF">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GQ2-WA-EyS">
-                                        <rect key="frame" x="0.0" y="50" width="124" height="30"/>
-                                        <state key="normal" title="Fetch CryptoPrice"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
+                                        <state key="normal" title="Open VC"/>
                                         <connections>
                                             <action selector="fetch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZeP-fM-7a3"/>
                                         </connections>
@@ -40,12 +40,14 @@
                         <constraints>
                             <constraint firstItem="HOk-j1-guM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="amp-9n-JAQ"/>
                             <constraint firstItem="HOk-j1-guM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dVm-x6-d9x"/>
+                            <constraint firstItem="HOk-j1-guM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="iQO-xX-Mtg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="HOk-j1-guM" secondAttribute="trailing" id="iwZ-eQ-htM"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="QtE-sm-B9w"/>
                     <connections>
                         <outlet property="fetchButton" destination="GQ2-WA-EyS" id="ofD-Us-lz3"/>
-                        <outlet property="priceLable" destination="nAm-M7-YaF" id="L8g-0j-JKm"/>
+                        <outlet property="infoLabel" destination="nAm-M7-YaF" id="L8g-0j-JKm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

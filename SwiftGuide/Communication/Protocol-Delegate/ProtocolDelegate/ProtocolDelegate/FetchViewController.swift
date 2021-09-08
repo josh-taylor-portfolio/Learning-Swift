@@ -7,19 +7,22 @@
 
 import UIKit
 
+protocol FetchViewControllerDelegate: AnyObject {
+    func buttonPressed(fetchViewController: FetchViewController, value: String)
+}
+
 class FetchViewController: UIViewController {
 
-    let cryptoRateService: CryptoRateService = CryptoRateService()
+    weak var fetchViewControllerDelegate: FetchViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
     
 
     @IBAction func FetchData(_ sender: Any) {
-        cryptoRateService.fetchCryptoRate()
+        fetchViewControllerDelegate?.buttonPressed(fetchViewController: self, value: "\"Hi, From FetchViewControllerDelegate\"")
         self.navigationController?.popViewController(animated: true)
     }
     
