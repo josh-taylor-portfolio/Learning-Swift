@@ -31,7 +31,8 @@ URLSession different Tasks:
 ### 1. Set up the HTTP request with URLSession
 
 ```swift
-let url = URLSession.shared.URL(string: "...")!
+let session = URLSession.shared
+let url = URL(string: "...")!
 ```
 
 - URL is is an optional being forcred unwrapped.
