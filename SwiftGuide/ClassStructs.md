@@ -63,4 +63,4 @@ person.name = "Peter" // compiler error
 ### When should you choose a value type and when should you choose a reference type?
 
 1. Structs for Models
-2. Class for behavior
+2. Classes for behavior
