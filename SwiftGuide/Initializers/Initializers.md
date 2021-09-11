@@ -27,3 +27,27 @@ josh.lastName
 - The memberwise initializer only works for structs, and not for classes. You’ll get it “for free” for structs, but not for classes!
 - If you provide your own init() function, you lose the memberwise initializer. A solution here is to write your own, of course.
 - You can use the memberwise initializer with and without default values for properties.
+
+### Failable Initializers
+
+- A failable initializer is an initializer function that may return nil, or may return a value. It’s the initializer equivalent of optionals. 
+- Returns an optional
+
+```swift 
+class Sudent{
+  let id: Int
+  
+  //returns an optional
+  init?(id: String) {
+     guard let id = Int(id) else {
+        return nil
+     }
+     self.id = id
+  }
+}
+
+let studentA = Student(id: "test")
+studentA
+
+let studentB = Student(id: "23456")
+studentB?.id
