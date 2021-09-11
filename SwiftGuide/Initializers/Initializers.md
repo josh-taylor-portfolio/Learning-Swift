@@ -24,5 +24,6 @@ josh.lastName
 
 ### Memberwise Initializer
 
-- Only available for Structs
-- The memberwise initializer, which will synthesize an init() function based on a struct’s properties
+- The memberwise initializer only works for structs, and not for classes. You’ll get it “for free” for structs, but not for classes!
+- If you provide your own init() function, you lose the memberwise initializer. A solution here is to write your own, of course.
+- You can use the memberwise initializer with and without default values for properties.
