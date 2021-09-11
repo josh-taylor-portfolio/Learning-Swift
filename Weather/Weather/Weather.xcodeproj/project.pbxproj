@@ -17,6 +17,7 @@
 		4F67CA3026E42D38005422BA /* WeatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F67CA2F26E42D38005422BA /* WeatherUITests.swift */; };
 		4FD6040526E6F8EE00388549 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD6040426E6F8EE00388549 /* WeatherService.swift */; };
 		4FD6040726E6F91C00388549 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD6040626E6F91C00388549 /* WeatherModel.swift */; };
+		82A8EF365BCF5FEAEEA8E453 /* OpenWeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A8EFE0B8A9405E209E09B4 /* OpenWeatherData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		4F67CA3126E42D38005422BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FD6040426E6F8EE00388549 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		4FD6040626E6F91C00388549 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		82A8EFE0B8A9405E209E09B4 /* OpenWeatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenWeatherData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				4F67CA1326E42D34005422BA /* Weather.xcdatamodeld */,
 				4FD6040426E6F8EE00388549 /* WeatherService.swift */,
 				4FD6040626E6F91C00388549 /* WeatherModel.swift */,
+				82A8EFE0B8A9405E209E09B4 /* OpenWeatherData.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				4F67CA0B26E42D34005422BA /* AppDelegate.swift in Sources */,
 				4FD6040726E6F91C00388549 /* WeatherModel.swift in Sources */,
 				4F67CA0D26E42D34005422BA /* SceneDelegate.swift in Sources */,
+				82A8EF365BCF5FEAEEA8E453 /* OpenWeatherData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

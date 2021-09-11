@@ -1,8 +1,5 @@
 //
-//  WeatherModel.swift
-//  Weather
-//
-//  Created by Joshua Taylor on 9/6/21.
+// Created by Joshua Taylor on 9/10/21.
 //
 
 import Foundation
@@ -52,15 +49,46 @@ import Foundation
   "name": "Mountain View",
   "cod": 200
   }
-
  */
 
+struct OpenWeatherData: Codable {
 
-struct WeatherModel {
-    
-    let city: String
-    let temperature: String
-    let imageName: String
+    let weather: [Weather]
+    let coord: Coord
+    let wind: Wind
+    let visibility: Int
+    let main: Main
 
-    func 
+    func getWeatherModel() -> WeatherModel {
+
+        return WeatherModel(city: <#T##String##Swift.String#>, temperature: <#T##String##Swift.String#>, imageName: <#T##String##Swift.String#>)
+
+
+    }
+
+}
+
+struct Main: Codable {
+
+    let temp: String
+    let feels_like: Double
+    let temp_min: Double
+    let temp_max: Double
+
+}
+
+struct Weather: Codable {
+    let id: Int
+    let main: String
+    let description: String
+}
+
+struct Coord: Codable {
+    let lon: Double
+    let lat: Double
+}
+
+struct Wind: Codable {
+    let speed: Double
+    let deg: Int
 }

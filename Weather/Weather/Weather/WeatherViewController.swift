@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import CoreLocation
 
 class WeatherViewController: UIViewController {
+    
+    let locationManager = CLLocationManager()
 
     let backgroundView = UIImageView()
     
@@ -21,9 +24,12 @@ class WeatherViewController: UIViewController {
     let tempLabel = UILabel()
     let cityLabel = UILabel()
     
+    let weatherService = WeatherService()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        setup()
         style()
         layout()
         
@@ -32,6 +38,17 @@ class WeatherViewController: UIViewController {
 }
 
 extension WeatherViewController {
+    
+    func setup() {
+        // Create a CLLocationManager and assign a delegate
+        locationManager.delegate = self
+
+        // Request a user’s location once
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+        
+        weatherService.delegate = self
+    }
     
     func style() {
         
@@ -44,6 +61,7 @@ extension WeatherViewController {
         
         locationButton.translatesAutoresizingMaskIntoConstraints = false
         locationButton.setBackgroundImage(UIImage(systemName: "location.circle.fill"), for: .normal)
+        locationButton.addTarget(self, action: #selector(locationPressed(_:)), for: .primaryActionTriggered)
         locationButton.tintColor = .label
         
         searchButton.translatesAutoresizingMaskIntoConstraints = false
@@ -158,7 +176,60 @@ extension WeatherViewController {
         return text
     }
     
+}
+
+extension WeatherViewController: CLLocationManagerDelegate {
+    
+    @objc func locationPressed(_ sender: UIButton) {
+        locationManager.requestLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let locations = locations.first {
+            locationManager.stopUpdatingLocation()
+            weatherService.fetchWeatherData(lat: locations.coordinate.latitude,
+                                            long: locations.coordinate.longitude)
+            
+        }
+    }
+    
+
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("error getting location \(error)")
+    }
     
     
+}
+
+extension WeatherViewController: WeatherServiceDelegate {
+    func didFeatchWeather(weatherSerivce: WeatherService, result: WeatherResult) {
+        switch result {
+        case .success(let data):
+            self.handleSuccess(weatherModel: data)
+        case .failure(let error):
+            self.handleError(weatherServiceError: error)
+        }
+    }
+    
+    func handleSuccess(weatherModel: WeatherModel) {
+        
+        
+        
+    }
+    
+    func handleError(weatherServiceError: WeatherServiceError) {
+        
+        
+        switch weatherServiceError {
+        case .general(reason: let data):
+            print("\(data)")
+        case .network(statusCode: let statusCode):
+            print("\(statusCode)")
+        case .parsing:
+            print("Parsing error")
+        }
+    
+    }
 }
 
