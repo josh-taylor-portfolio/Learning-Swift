@@ -131,3 +131,17 @@ A simple way to remember this is:
 
 <img width="614" alt="Screen Shot 2021-09-12 at 8 02 08 PM" src="https://user-images.githubusercontent.com/89819167/133009879-c76f22c3-40a5-4fbc-8b3e-35ecb118fa06.png">
 
+
+### Setting a Default Property Value with a Closure or Function
+
+- If a stored property’s default value requires some customization or setup, you can use a closure or global function to provide a customized default value for that property.
+
+```swift
+class SomeClass {
+    let someProperty: SomeType = {
+        // create a default value for someProperty inside this closure
+        // someValue must be of the same type as SomeType
+        return someValue
+    }()
+}
+```
