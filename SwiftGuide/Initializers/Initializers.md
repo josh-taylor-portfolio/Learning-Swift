@@ -115,9 +115,19 @@ class Circle {
 - The above init(circumference:) initializer, called a convenience initializer, takes a circumference parameter. Within the function body, the circumference of the circle is used to calculate its radius, which is provided to the designated initializer init(radius:).
 
 ### Few Rules for Initializers:
+From Apples Documentation:
 
-1. A designated initializer must call a designated initializer from its immediate superclass
-2. A convenience initializer must call another initializer from the same class
-3. A convenience initializer must ultimately call a designated initializer
+- Initializer Delegation for Class Types
 
-* Another way of remembering these rules, is that designated initializers must always delegate up, and convenience initializers must always delegate across.
+To simplify the relationships between designated and convenience initializers, Swift applies the following three rules for delegation calls between initializers:
+
+1. A designated initializer must call a designated initializer from its immediate superclass.
+2. A convenience initializer must call another initializer from the same class.
+3. A convenience initializer must ultimately call a designated initializer.
+
+A simple way to remember this is:
+- Designated initializers must always delegate up.
+- Convenience initializers must always delegate across.
+
+<img width="614" alt="Screen Shot 2021-09-12 at 8 02 08 PM" src="https://user-images.githubusercontent.com/89819167/133009879-c76f22c3-40a5-4fbc-8b3e-35ecb118fa06.png">
+
