@@ -21,7 +21,7 @@ enum Result<Value, Error: Swift.Error> {
 }
 
 protocol WeatherServiceDelegate: AnyObject {
-    func didFeatchWeather(weatherSerivce: WeatherService, result: WeatherResult)
+    func didFetchWeather(weatherSerivce: WeatherService, result: WeatherResult)
 }
 
 
@@ -29,7 +29,7 @@ class WeatherService {
     
     weak var delegate: WeatherServiceDelegate?
     
-    var url = URL(string: "api.openweathermap.org/data/2.5/weather?appid=75290d7ca52998c183fb7e90dfc4ac90&units=metric")!
+    var url = URL(string: "api.openweathermap.org/data/2.5/weather?appid={apiKey}&units=metric")!
     
 //    func featchWeather() {
 //
@@ -59,7 +59,7 @@ class WeatherService {
     }
     
     private func updateDidFetchWeather(weatherResult: WeatherResult) {
-        delegate?.didFeatchWeather(weatherSerivce: self, result: weatherResult)
+        delegate?.didFetchWeather(weatherSerivce: self, result: weatherResult)
     }
     
     func performRequest(with urlString: String) {

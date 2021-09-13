@@ -203,7 +203,7 @@ extension WeatherViewController: CLLocationManagerDelegate {
 }
 
 extension WeatherViewController: WeatherServiceDelegate {
-    func didFeatchWeather(weatherSerivce: WeatherService, result: WeatherResult) {
+    func didFetchWeather(weatherSerivce: WeatherService, result: WeatherResult) {
         switch result {
         case .success(let data):
             self.handleSuccess(weatherModel: data)
