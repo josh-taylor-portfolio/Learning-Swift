@@ -9,6 +9,8 @@ import UIKit
 import CoreLocation
 
 class WeatherViewController: UIViewController {
+
+    private let weatherLogic = WeatherLogicController()
     
     let locationManager = CLLocationManager()
 
@@ -16,13 +18,16 @@ class WeatherViewController: UIViewController {
     
     let searchStackView = UIStackView()
     let locationButton = UIButton()
-    let searchButton = UIButton()
+    let activityIndicatorContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+    let activityIndicatorView = UIActivityIndicatorView()
+
     let searchTextField = UITextField()
     
     let weatherInfoStackView = UIStackView()
     let weatherImageView = UIImageView()
     let tempLabel = UILabel()
     let cityLabel = UILabel()
+    let lastUpdatedLabel = UILabel()
     
     let weatherService = WeatherService()
     
@@ -46,8 +51,15 @@ extension WeatherViewController {
         // Request a user’s location once
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
-        
-        weatherService.delegate = self
+
+        searchTextField.delegate = self
+
+        if let weatherData = WeatherDefaults.getWeatherData() {
+            handleSuccess(weatherModel: weatherData)
+        }
+
+        activityIndicatorView.hidesWhenStopped = false
+        self.activityIndicatorView.startAnimating()
     }
     
     func style() {
@@ -61,19 +73,25 @@ extension WeatherViewController {
         
         locationButton.translatesAutoresizingMaskIntoConstraints = false
         locationButton.setBackgroundImage(UIImage(systemName: "location.circle.fill"), for: .normal)
-        locationButton.addTarget(self, action: #selector(locationPressed(_:)), for: .primaryActionTriggered)
+        locationButton.addAction(
+            UIAction { [weak self] action in
+                self?.activityIndicatorView.startAnimating()
+                self?.locationManager.requestLocation()
+            }, for: .primaryActionTriggered)
         locationButton.tintColor = .label
-        
-        searchButton.translatesAutoresizingMaskIntoConstraints = false
-        searchButton.setBackgroundImage(UIImage(systemName: "magnifyingglass"), for: .normal)
-        searchButton.tintColor = .label
-        
+
+        activityIndicatorContainerView.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicatorContainerView.backgroundColor = .clear
+
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicatorView.color = .black
+        activityIndicatorView.backgroundColor = .clear
+
         searchTextField.translatesAutoresizingMaskIntoConstraints = false
         searchTextField.font = UIFont.preferredFont(forTextStyle: .title1)
         searchTextField.placeholder = "Search"
         searchTextField.textAlignment = .left
         searchTextField.borderStyle = .roundedRect
-        searchButton.backgroundColor = .systemFill
         
         //Weather Stackview
         weatherInfoStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -82,23 +100,25 @@ extension WeatherViewController {
         weatherInfoStackView.contentMode = .scaleAspectFit
         
         weatherImageView.translatesAutoresizingMaskIntoConstraints = false
-        weatherImageView.image = UIImage(systemName: "sun.max")
-        weatherImageView.tintColor = .label
+        weatherImageView.tintColor = .black
         weatherImageView.contentMode = .scaleAspectFit
         
         
         tempLabel.translatesAutoresizingMaskIntoConstraints = false
-        tempLabel.tintColor = .label
+        tempLabel.tintColor = .black
         tempLabel.numberOfLines = 1
         tempLabel.textAlignment = .center
-        tempLabel.attributedText = makeTempAttributedText(with: "21")
         
         
         cityLabel.translatesAutoresizingMaskIntoConstraints = false
-        cityLabel.tintColor = .label
+        cityLabel.tintColor = .black
         cityLabel.numberOfLines = 1
-        cityLabel.attributedText = makeCityAttributedText(with: "Chicago")
         cityLabel.textAlignment = .center
+
+        lastUpdatedLabel.translatesAutoresizingMaskIntoConstraints = false
+        lastUpdatedLabel.tintColor = .black
+        lastUpdatedLabel.numberOfLines = 1
+        lastUpdatedLabel.textAlignment = .center
         
     }
     
@@ -107,14 +127,19 @@ extension WeatherViewController {
         view.addSubview(backgroundView)
         view.addSubview(searchStackView)
         view.addSubview(weatherInfoStackView)
+
+        activityIndicatorContainerView.addSubview(activityIndicatorView)
         
         searchStackView.addArrangedSubview(locationButton)
         searchStackView.addArrangedSubview(searchTextField)
-        searchStackView.addArrangedSubview(searchButton)
+        searchStackView.addArrangedSubview(activityIndicatorContainerView)
         
         weatherInfoStackView.addArrangedSubview(weatherImageView)
         weatherInfoStackView.addArrangedSubview(tempLabel)
         weatherInfoStackView.addArrangedSubview(cityLabel)
+        weatherInfoStackView.addArrangedSubview(lastUpdatedLabel)
+
+        activityIndicatorView.frame = activityIndicatorContainerView.bounds
         
         NSLayoutConstraint.activate([
             backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -129,8 +154,11 @@ extension WeatherViewController {
             locationButton.widthAnchor.constraint(equalToConstant: 40),
             locationButton.heightAnchor.constraint(equalToConstant: 40),
 
-            searchButton.widthAnchor.constraint(equalToConstant: 40),
-            searchButton.heightAnchor.constraint(equalToConstant: 40),
+            activityIndicatorContainerView.widthAnchor.constraint(equalToConstant: 40),
+            activityIndicatorContainerView.heightAnchor.constraint(equalToConstant: 40),
+
+            activityIndicatorView.widthAnchor.constraint(equalToConstant: 40),
+            activityIndicatorView.heightAnchor.constraint(equalToConstant: 40),
             
             locationButton.widthAnchor.constraint(equalToConstant: 40),
             locationButton.heightAnchor.constraint(equalToConstant: 40),
@@ -143,6 +171,7 @@ extension WeatherViewController {
             
             tempLabel.widthAnchor.constraint(equalTo: weatherInfoStackView.widthAnchor),
             cityLabel.widthAnchor.constraint(equalTo: weatherInfoStackView.widthAnchor),
+            lastUpdatedLabel.widthAnchor.constraint(equalTo: weatherInfoStackView.widthAnchor)
             
         ])
     }
@@ -150,12 +179,13 @@ extension WeatherViewController {
     func makeTempAttributedText(with string: String) -> NSAttributedString{
         
         let boldAttributes: [NSAttributedString.Key: AnyObject] = [
-            .foregroundColor: UIColor.label,
+            .foregroundColor: UIColor.black,
             .font: UIFont.boldSystemFont(ofSize: 100)
         ]
         
         let plainTextAttributes: [NSAttributedString.Key: AnyObject] = [
-            .font: UIFont.boldSystemFont(ofSize: 80)
+            .font: UIFont.boldSystemFont(ofSize: 80),
+            .foregroundColor: UIColor.black
         ]
         
         let text = NSMutableAttributedString(string: string, attributes: boldAttributes)
@@ -167,7 +197,7 @@ extension WeatherViewController {
     func makeCityAttributedText(with string: String) -> NSAttributedString{
         
         let boldAttributes: [NSAttributedString.Key: AnyObject] = [
-            .foregroundColor: UIColor.label,
+            .foregroundColor: UIColor.black,
             .font: UIFont.preferredFont(forTextStyle: .largeTitle)
         ]
         
@@ -175,61 +205,108 @@ extension WeatherViewController {
         
         return text
     }
-    
+
+    func makeLastUpdateAttributedText(with string: String) -> NSAttributedString{
+
+        let boldAttributes: [NSAttributedString.Key: AnyObject] = [
+            .foregroundColor: UIColor.black,
+            .font: UIFont.preferredFont(forTextStyle: .subheadline)
+        ]
+
+        let text = NSMutableAttributedString(string: string, attributes: boldAttributes)
+
+        return text
+    }
+
+    func render(result: ViewStateResult) {
+
+        self.activityIndicatorView.stopAnimating()
+        switch result{
+        case .success(let weatherModel):
+            handleSuccess(weatherModel: weatherModel)
+        case .failure(let error):
+            handleError(weatherServiceError: error)
+        }
+    }
+
+    func handleSuccess(weatherModel: WeatherModel) {
+        self.cityLabel.attributedText = makeCityAttributedText(with: weatherModel.city)
+        self.tempLabel.attributedText = makeTempAttributedText(with: weatherModel.temperature)
+        self.lastUpdatedLabel.attributedText = makeLastUpdateAttributedText(with: weatherModel.lastUpdated)
+        self.weatherImageView.image = weatherModel.getWeatherImage()
+        WeatherDefaults.saveWeatherData(weatherData: weatherModel)
+    }
+
+    func handleError(weatherServiceError: WeatherServiceError) {
+        var title: String
+        var message: String
+
+        switch weatherServiceError {
+        case .general(reason: let data):
+            title = "General Weather Service Error"
+            message = "\(data)"
+        case .network(statusCode: let statusCode):
+            title = "Network Weather Service Error"
+            if statusCode == 401 {
+                message = "Response status code: \(statusCode), Check your Api Key"
+            } else {
+                message = "Response status code: \(statusCode), expected 200"
+            }
+        case .parsing:
+            title = "Parsing Weather Service Error"
+            message = "Problem parsing response data"
+        case .invalidUrl:
+            title = "Invalid Weather Service Url Error"
+            message = "Problem parsing URL"
+        case .data(reason: let reason):
+            title = "Empty Data"
+            message = reason
+        }
+
+        let alert = createUIAlertControllerWithOkayAction(title: title, message: message)
+        self.present(alert, animated: true)
+    }
+
 }
 
 extension WeatherViewController: CLLocationManagerDelegate {
     
-    @objc func locationPressed(_ sender: UIButton) {
-        locationManager.requestLocation()
-    }
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let locations = locations.first {
-            locationManager.stopUpdatingLocation()
-            weatherService.fetchWeatherData(lat: locations.coordinate.latitude,
-                                            long: locations.coordinate.longitude)
-            
+            weatherLogic.getWeatherForLatLon(lat: locations.coordinate.latitude, lon: locations.coordinate.longitude) { [weak self] result in
+                DispatchQueue.main.async {
+                    self?.locationManager.stopUpdatingLocation()
+                    self?.render(result: result)
+                }
+            }
         }
     }
-    
 
-    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("error getting location \(error)")
+        let title = "Error Getting Location"
+        let message = "\(error)"
+        let alert = createUIAlertControllerWithOkayAction(title: title, message: message)
+        self.present(alert, animated: true)
     }
-    
-    
+
 }
 
-extension WeatherViewController: WeatherServiceDelegate {
-    func didFetchWeather(weatherSerivce: WeatherService, result: WeatherResult) {
-        switch result {
-        case .success(let data):
-            self.handleSuccess(weatherModel: data)
-        case .failure(let error):
-            self.handleError(weatherServiceError: error)
+extension WeatherViewController: UITextFieldDelegate {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        guard let city = textField.text, textField.hasText else {
+            return true
         }
-    }
-    
-    func handleSuccess(weatherModel: WeatherModel) {
-        
-        
-        
-    }
-    
-    func handleError(weatherServiceError: WeatherServiceError) {
-        
-        
-        switch weatherServiceError {
-        case .general(reason: let data):
-            print("\(data)")
-        case .network(statusCode: let statusCode):
-            print("\(statusCode)")
-        case .parsing:
-            print("Parsing error")
+        self.activityIndicatorView.startAnimating()
+        weatherLogic.getWeatherForCity(city: city) { [weak self] result in
+            DispatchQueue.main.async {
+                self?.render(result: result)
+            }
         }
-    
+        weatherService.fetchWeatherData(city: city)
+        textField.text = nil
+
+        return true
     }
 }
 
